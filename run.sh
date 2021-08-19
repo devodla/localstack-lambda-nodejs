@@ -1,5 +1,5 @@
 # Criar um bucket
-aws --endpoint-url=http://localhost:4566 s3 mb s3://danieldcs
+aws --endpoint-url=http://localhost:4566 s3 mb s3://devreynaldo.me
 
 # Listar todos os buckets
 aws --endpoint-url=http://localhost:4566 s3 ls
@@ -18,12 +18,17 @@ aws sqs create-queue \
 
 # deve retornar algo como:
 {
-  "QueueUrl": "http://localhost:4566/000000000/local-queue"
+  "QueueUrl": "http://localhost:4566/000000000000/local-queue"
 }
 
 aws --endpoint-url http://localhost:4566 sns create-topic --name local-topic ## #v2 cli#--region us-east-1
 
 # deve retornar algo como:
 {
-  "TopicArn": "arn:aws:sns:us-east-1:000000000:local-topic"
+  "TopicArn": "arn:aws:sns:us-east-1:000000000000:local-topic"
 }
+
+aws sns subscribe \
+--notification-endpoint http://localhost:4566/000000000000/local-queue \
+--topic-arn arn:aws:sns:us-east-1:000000000000:local-topic \
+--protocol sqs --endpoint-url=http://localhost:4566 --region us-east-1

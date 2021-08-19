@@ -3,10 +3,10 @@ const { promisify } = require('util')
 
 AWS.config.update({ region: 'us-east-1' })
 
-const sns = new AWS.SNS({ endpoint: '' })
+const sns = new AWS.SNS({ endpoint: 'http://localhost:4566' })
 sns.publish = promisify(sns.publish)
 
-const TopicArn = ''
+const TopicArn = 'arn:aws:sns:us-east-1:000000000000:local-topic'
 
 async function publish(msg) {
   const publishParams = {
@@ -16,7 +16,7 @@ async function publish(msg) {
   let topicRes
   
   try {
-    topicRes = await sns.publish(publishParams).promise()
+    topicRes = await sns.publish(publishParams)
   } catch (e) {
     topicRes = e
   }

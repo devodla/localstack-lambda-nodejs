@@ -2,11 +2,11 @@ const AWS = require('aws-sdk')
 
 const { promisify } = require('util')
 AWS.config.update({ region: 'us-east-1' })
-const sqs = new AWS.SQS({ endpoint: '' })
+const sqs = new AWS.SQS({ endpoint: 'http://localhost:4566' })
 
 sqs.receiveMessage = promisify(sqs.receiveMessage)
 
-const QueueUrl = ''
+const QueueUrl = 'http://localhost:4566/000000000000/local-queue'
 const receiveParams = {
   QueueUrl,
   MaxNumberOfMessages: 1
@@ -14,7 +14,7 @@ const receiveParams = {
 
 async function receive() {
   try {
-    const queueData = await sqs.receiveMessage(receiveParams).promise()
+    const queueData = await sqs.receiveMessage(receiveParams)
     if (
         queueData &&
         queueData.Messages &&

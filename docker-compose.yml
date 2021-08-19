@@ -8,7 +8,7 @@ services:
     ports:
       - "4566-4583:4566-4583"
     environment:
-      - SERVICES=s3,lambda,sqs,apigateway
+      - SERVICES=s3,lambda,sqs,apigateway,sns
       - AWS_DEFAULT_REGION=us-east-1
       - EDGE_PORT=4566
       - DEBUG=1

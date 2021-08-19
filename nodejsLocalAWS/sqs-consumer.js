@@ -15,21 +15,17 @@ const receiveParams = {
 async function receive() {
   try {
     const queueData = await sqs.receiveMessage(receiveParams)
-    if (
-        queueData &&
-        queueData.Messages &&
-        queueData.Messages.length > 0
-      ) {
-        const [firstMessage] = queueData.Messages
-        console.log('RECEIVED: ', firstMessage)
-        const deleteParams = {
-          QueueUrl,
-          ReceiptHandle: firstMessage.ReceiptHandle
-        }
-        sqs.deleteMessage(deleteParams)
-      } else {
-        console.log('waiting...')
+    if (queueData && queueData.Messages && queueData.Messages.length > 0) {
+      const [firstMessage] = queueData.Messages
+      console.log('RECEIVED: ', firstMessage)
+      const deleteParams = {
+        QueueUrl,
+        ReceiptHandle: firstMessage.ReceiptHandle
       }
+      sqs.deleteMessage(deleteParams)
+    } else {
+      console.log('waiting...')
+    }
   } catch (e) {
     console.log('ERROR: ', e)
   }

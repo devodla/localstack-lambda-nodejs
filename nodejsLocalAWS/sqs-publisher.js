@@ -14,7 +14,7 @@ async function publish(msg) {
     Message: msg
   }
   let topicRes
-  
+
   try {
     topicRes = await sns.publish(publishParams)
   } catch (e) {
